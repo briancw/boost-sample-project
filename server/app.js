@@ -22,22 +22,47 @@ app.use(bodyParser.json());
 app.use('/api', api);
 
 // Setup Listeners
-const productsChannel = io.of('/products');
-productsChannel.on('connection', function(socket) {
-    socket.on('verify_data', function() {
-        console.log('verify data');
-    });
+let Posts = require('./api/posts/posts.js');
+
+const postsSubscription = io.of('/posts');
+postsSubscription.on('connection', function(socket) {
     console.log('new connection');
 
+    socket.on('verify_data', function() {
+        console.log('verify data request');
+    });
+
     socket.on('get_data', function() {
-        socket.emit('data_response', 'init_' + Math.random());
         console.log('get data request');
+
+        Posts.run().then(posts => {
+            console.log(posts);
+            socket.emit('data_response', posts);
+        });
     });
 });
 
-setInterval(function() {
-    productsChannel.emit('update', 'update_' + Math.random());
-}, 2000);
+Posts.changes().then(function(feed) {
+    feed.each(function(error, doc) {
+        if (error) {
+            console.log(error);
+        }
+
+        console.log("A document was updated.");
+        console.log("New value:");
+        console.log(JSON.stringify(doc));
+        postsSubscription.emit('update', doc);
+    });
+}).error(function(error) {
+    console.log(error);
+});
+
+// setInterval(function() {
+//     Posts.run().each(post => {
+//         let rand = String(Math.random());
+//         post.merge({content: 'content ' + rand}).save();
+//     });
+// }, 3000);
 
 // Load Methods
 require('./api/users/users_methods.js')(api);

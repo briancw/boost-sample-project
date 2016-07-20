@@ -30,8 +30,8 @@ class Boost {
         console.log('requesting data');
         connection.emit('get_data');
 
-        connection.on('data_response', function(data) {
-            localStorage[path] = data;
+        connection.on('data_response', data => {
+            localStorage[path] = JSON.stringify(data);
             component[variable] = data;
 
             this.continious_updates(connection, path, component, variable);
@@ -39,9 +39,11 @@ class Boost {
     }
 
     continious_updates(connection, path, component, variable) {
+        console.log('starting continious updates');
+
         connection.on('update', function(data) {
-            localStorage[path] = data;
-            component[variable] = data;
+            localStorage[path] = JSON.stringify(data);
+            component[variable] = JSON.stringify(data);
         });
     }
 }
