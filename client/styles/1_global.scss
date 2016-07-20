@@ -1,0 +1,18 @@
+.clearfix:after {
+    content: ' ';
+    clear: both;
+    display: block;
+    height: 0;
+    font-size: 0;
+    visibility: hidden;
+}
+
+#site-root, #site_container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+    .site_content {
+        flex: 1;
+    }
+}
