@@ -1,4 +1,5 @@
 import io from './libs/socketio.1.4.5.min.js';
+import hash from 'object-hash';
 
 class Boost {
     subscribe(component, variable, path) {
@@ -9,21 +10,21 @@ class Boost {
             let existing_data = localStorage[path];
             if (existing_data) {
                 console.log('Existing Data ' + existing_data);
+                this.verify_data(new_conn, existing_data);
                 component[variable] = existing_data;
-                this.continious_updates(new_conn, path, component, variable);
             } else {
                 console.log('No Existing Data');
                 this.request_data(new_conn, path, component, variable);
             }
         });
+    }
 
-        let return_object = {
-            get current() {
-                return localStorage[path];
-            },
-        };
-
-        return return_object;
+    verify_data(connection, data) {
+        let data_hash = hash(data);
+        connection.emit('verify_data', data_hash);
+        connection.on('verify_response', res => {
+            console.log(res);
+        });
     }
 
     request_data(connection, path, component, variable) {

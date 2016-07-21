@@ -5,6 +5,7 @@ const server = require('http').Server(app);
 const port = process.env.PORT ? process.env.PORT : 80;
 const path = require('path');
 const io = require('socket.io')(server);
+const hash = require('object-hash');
 GLOBAL.co = require('bluebird').coroutine;
 
 require('./fixtures');
@@ -28,8 +29,11 @@ const postsSubscription = io.of('/posts');
 postsSubscription.on('connection', function(socket) {
     console.log('new connection');
 
-    socket.on('verify_data', function() {
-        console.log('verify data request');
+    socket.on('verify_data', data_hash => {
+        console.log('verify data request ' + data_hash);
+        let current_data_hash = hash({foo: 'bar'});
+        let is_valid = (data_hash === current_data_hash);
+        socket.emit('verify_response', {valid: is_valid});
     });
 
     socket.on('get_data', function() {
