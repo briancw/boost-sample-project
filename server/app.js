@@ -5,7 +5,6 @@ const server = require('http').Server(app);
 const port = process.env.PORT ? process.env.PORT : 80;
 const path = require('path');
 const io = require('socket.io')(server);
-const hash = require('object-hash');
 GLOBAL.co = require('bluebird').coroutine;
 
 require('./fixtures');
@@ -22,45 +21,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/api', api);
 
-// Setup Listeners
-let Posts = require('./api/posts/posts.js');
-
-const postsSubscription = io.of('/posts');
-postsSubscription.on('connection', function(socket) {
-    console.log('new connection');
-
-    socket.on('verify_data', data_hash => {
-        console.log('verify data request ' + data_hash);
-        let current_data_hash = hash({foo: 'bar'});
-        let is_valid = (data_hash === current_data_hash);
-        socket.emit('verify_response', {valid: is_valid});
-    });
-
-    socket.on('get_data', function() {
-        console.log('get data request');
-
-        Posts.run().then(posts => {
-            console.log(posts);
-            socket.emit('data_response', posts);
-        });
-    });
-});
-
-Posts.changes().then(function(feed) {
-    feed.each(function(error, doc) {
-        if (error) {
-            console.log(error);
-        }
-
-        console.log("A document was updated.");
-        console.log("New value:");
-        console.log(JSON.stringify(doc));
-        postsSubscription.emit('update', doc);
-    });
-}).error(function(error) {
-    console.log(error);
-});
-
 // setInterval(function() {
 //     Posts.run().each(post => {
 //         let rand = String(Math.random());
@@ -70,6 +30,7 @@ Posts.changes().then(function(feed) {
 
 // Load Methods
 require('./api/users/users_methods.js')(api);
+require('./api/posts/posts_endpoint.js')(io);
 
 server.listen(port, function(err) {
     h.handle(err);

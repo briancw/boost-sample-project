@@ -1,13 +1,13 @@
 <template>
     <div class="page_container home_page">
         Home {{ foo }}<br />
-        Posts: {{ posts }}
+        Posts: {{ posts.data }}
     </div>
 </template>
 
 <script>
     import store from '../vuex/store.js';
-    import Boost from '../boost.js';
+    import boost from '../boost.js';
 
     export default {
         name: 'home',
@@ -19,12 +19,10 @@
         },
         data() {
             return {
-                posts: [],
+                posts: boost.subscribe('/posts'),
             };
         },
         created() {
-            let boost = new Boost();
-            boost.subscribe(this, 'posts', '/posts');
         },
     };
 </script>
