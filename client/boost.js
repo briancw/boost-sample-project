@@ -10,58 +10,51 @@ class Boost {
         this.path = path;
 
         this.connection.on('connect', () => {
-            console.log('connected to ' + path);
-
-            let existing_data = localStorage[path];
-            if (existing_data) {
-                console.log('Existing Data');
-                this.verify_data(existing_data, ret);
-            } else {
-                console.log('No Existing Data');
-                this.request_data(ret);
-            }
+            this.verify_data(ret);
+            this.continious_updates(ret);
         });
 
         return ret;
     }
 
-    verify_data(data, ret) {
-        let data_hash = hash(data);
-        this.connection.emit('verify_data', data_hash);
-        this.connection.on('verify_response', res => {
-            if (res.valid) {
-                console.log('Data is valid');
-                ret.data = data;
-                this.continious_updates(ret);
-            } else {
-                console.log('Existing data is invalid');
-                this.request_data(ret);
-            }
-        });
+    verify_data(ret) {
+        let existing_data = localStorage[this.path];
+        if (existing_data) {
+            let data_hash = hash(existing_data);
+            this.connection.emit('verify_data', data_hash);
+            this.connection.on('verify_response', res => {
+                if (res.valid) {
+                    // Server verifies that data is valid. Return it to the component.
+                    ret.data = existing_data;
+                } else {
+                    // Server does not validate data. Request new data.
+                    this.request_data(ret);
+                }
+            });
+        } else {
+            // No data cached. Request new data.
+            this.request_data(ret);
+        }
     }
 
     request_data(ret) {
-        console.log('requesting data');
         this.connection.emit('get_data');
-
         this.connection.on('data_response', response => {
-            console.log(response);
             localStorage[this.path] = JSON.stringify(response.data);
             ret.data = JSON.stringify(response.data);
-            this.continious_updates(ret);
         });
     }
 
     continious_updates(ret) {
-        console.log('starting continious updates');
-
         this.connection.on('update', function(type) {
             console.log(type);
+            if (!ret.data) {
+                console.log('Data not yet ready. Don\'t apply updates');
+            }
             // localStorage[connection.path] = JSON.stringify(data);
             // ret.data = JSON.stringify(data);
         });
     }
 }
 
-// export default Boost;
 export default new Boost();
