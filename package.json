@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "dev": "PORT=3005 JWT_SECRET=test nodemon server/app.js dev",
+    "dev": "PORT=3005 JWT_SECRET=test nodemon server/app.js --ignore client dev",
     "build-client": "webpack --config=webpack.production.conf.js",
     "production": "node server/app.js",
     "dev-babel": "PORT=3005 JWT_SECRET=test babel-watch server/app.js dev",

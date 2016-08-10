@@ -25,7 +25,7 @@ class Boost {
             this.connection.on('verify_response', res => {
                 if (res.valid) {
                     // Server verifies that data is valid. Return it to the component.
-                    ret.data = existing_data;
+                    ret.data = JSON.parse(existing_data);
                 } else {
                     // Server does not validate data. Request new data.
                     this.request_data(ret);
@@ -41,15 +41,36 @@ class Boost {
         this.connection.emit('get_data');
         this.connection.on('data_response', response => {
             localStorage[this.path] = JSON.stringify(response.data);
-            ret.data = JSON.stringify(response.data);
+            ret.data = response.data;
         });
     }
 
     continious_updates(ret) {
-        this.connection.on('update', function(type) {
+        this.connection.on('update', function(type, new_doc) {
             console.log(type);
-            if (!ret.data) {
-                console.log('Data not yet ready. Don\'t apply updates');
+            if (ret.data) {
+                if (type === 'update') {
+                    let tmp_data = ret.data;
+                    tmp_data = tmp_data.map(doc => {
+                        if (doc.id === new_doc.id) {
+                            return new_doc;
+                        }
+                        return doc;
+                    });
+
+                    ret.data = tmp_data;
+                } else if (type === 'insert') {
+                    ret.data.push(new_doc);
+                } else if (type === 'delete') {
+                    let tmp_data = ret.data;
+                    tmp_data.forEach((doc, i) => {
+                        if (new_doc.id === doc.id) {
+                            ret.data.splice(i, 1);
+                        }
+                    });
+                }
+            } else {
+                // console.log('Data not yet ready. Don\'t apply updates');
             }
             // localStorage[connection.path] = JSON.stringify(data);
             // ret.data = JSON.stringify(data);
