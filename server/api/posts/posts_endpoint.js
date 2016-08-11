@@ -1,5 +1,5 @@
 module.exports = function(boost) {
     const Posts = require('./posts.js');
 
-    boost.publish('/posts', Posts, {username: 'adam'});
+    boost.publish('/posts', Posts, {username: 'brian'});
 };

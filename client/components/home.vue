@@ -11,7 +11,7 @@
 
 <script>
     import store from '../vuex/store.js';
-    import boost from '../boost.js';
+    import boost from 'boostjs';
 
     export default {
         name: 'home',
