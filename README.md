@@ -1,4 +1,6 @@
-# BOOST JS 🚀 #
+# BOOST JS 🚀 Sample Project #
+
+Uses [boostjs](https://www.npmjs.com/package/boostjs) and [boostjs-server](https://www.npmjs.com/package/boostjs-server)
 
 ## Npm Scripts ##
 * dev: run the site in dev mode. This will start the server and proxy all requests to /build to a different port. This enables separate tasks to quickly and efficiently rebuild the client and server.
@@ -32,10 +34,8 @@ Server reloading requires nodemon. To install it, run ```npm install -g nodemon`
 
 
 Create 3 terminal tabs and run the following
-```
-#!sh
+```bash
 rethinkdb
 node hmr-server.js
 npm run dev
-
 ```
