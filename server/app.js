@@ -1,8 +1,17 @@
-const boost = require('boostjs-server');
+const BoostServer = require('boostjs-server');
+const boost = new BoostServer({
+    spdy: {
+        protocols: ['http/1.1'],
+        plain: true,
+    },
+    // key: fs.readFileSync('./server.key'),
+    // cert: fs.readFileSync('./server.crt'),
+});
+
 const express = require('express');
 const path = require('path');
 const port = process.env.PORT ? process.env.PORT : 80;
-GLOBAL.co = require('bluebird').coroutine;
+global.co = require('bluebird').coroutine;
 const app = boost.app;
 
 require('./fixtures');

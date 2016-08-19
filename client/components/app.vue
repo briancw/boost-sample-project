@@ -14,12 +14,14 @@
 <script>
 import store from '../vuex/store.js';
 import Home from './home.vue';
+import Login from './login.vue';
 import FourOhFour from './four_oh_four.vue';
 
 export default {
     store: store,
     components: {
         Home,
+        Login,
         FourOhFour,
     },
     data() {

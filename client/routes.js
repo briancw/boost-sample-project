@@ -5,6 +5,10 @@ export default {
         component: Default,
         page: 'home',
     },
+    '/login': {
+        component: Default,
+        page: 'login',
+    },
     '/404': {
         component: Default,
         page: 'four-oh-four',

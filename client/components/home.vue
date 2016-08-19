@@ -12,6 +12,7 @@
 <script>
     import store from '../vuex/store.js';
     import boost from 'boostjs';
+    console.log(boost.login)
 
     export default {
         name: 'home',
