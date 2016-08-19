@@ -35,8 +35,4 @@ module.exports = {
             sass: 'style!css!sass?indentedSyntax',
         },
     },
-    babel: {
-        presets: ['es2015'],
-        plugins: ['transform-runtime'],
-    },
 };
