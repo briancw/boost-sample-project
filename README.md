@@ -3,11 +3,9 @@
 Uses [boostjs](https://www.npmjs.com/package/boostjs) and [boostjs-server](https://www.npmjs.com/package/boostjs-server)
 
 ## Npm Scripts ##
-* dev: run the site in dev mode. This will start the server and proxy all requests to /build to a different port. This enables separate tasks to quickly and efficiently rebuild the client and server.
+* dev: Development mode. This will start the server and client build process.
 * build-client: Build all front end code into minified, production ready bundle in /public/build
-* production: runs the server. This is subject to change (pm2)
-* dev-babel: experimental. Use babelified code on the server.
-* build-server: experimental. Build babelified server code.
+* production: Runs the server. This is subject to change (pm2)
 
 ## Notable Npm Modules ##
 ### Core: ###
@@ -20,6 +18,7 @@ Uses [boostjs](https://www.npmjs.com/package/boostjs) and [boostjs-server](https
   * babel: allows writing modern js with recompilation to work on older browsers
   * babel-preset-es2015/stage-3: allows using cutting edge JS features
   * hot module reloading: vue-hot-reload-api, vue-html-loader, vue-loader, webpack-dev-middleware, webpack-dev-server, and webpack-hot-middleware are all used to hot reload clientside code
+  * nodemon: autoreloads serverside code on file changes
 
 ## Running on your machine ##
 #### Prep ####
@@ -27,15 +26,4 @@ This project requires Rethinkdb to be installed on your machine
   https://www.rethinkdb.com/docs/install/
 
 Additionally, you will need node and npm. Current recommend version is 6.x
-
 All client and server dependencies are managed via npm. Run ```npm install``` to get them
-
-Server reloading requires nodemon. To install it, run ```npm install -g nodemon```
-
-
-Create 3 terminal tabs and run the following
-```bash
-rethinkdb
-node hmr-server.js
-npm run dev
-```

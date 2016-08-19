@@ -18,6 +18,8 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 require('./api/posts/posts_endpoint.js')(boost);
 
 boost.launch(port, err => {
-    // h.handle(err);
+    if (err) {
+        console.log(err);
+    }
     console.log('Listening on port: ' + port);
 });

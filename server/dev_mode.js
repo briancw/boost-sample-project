@@ -4,10 +4,11 @@ module.exports = function(app) {
         const proxy = httpProxy.createProxyServer({
             changeOrigin: true,
         });
+        const build_port = process.env.BUILD_PORT;
 
         app.all('/build/*', function(req, res) {
             proxy.web(req, res, {
-                target: 'http://localhost:8090',
+                target: 'http://localhost:' + build_port,
             });
         });
 
