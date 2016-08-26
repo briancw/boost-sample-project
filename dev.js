@@ -40,13 +40,18 @@ nodemon({
         BUILD_PORT: build_port,
         JWT_SECRET: 'test',
     },
+    execMap: {
+        js: 'node --inspect',
+    },
 });
 
 nodemon.on('start', function() {
     console.log('Server started');
 }).on('quit', function() {
-    console.log('Server has stopped\n');
-    process.exit(0);
+    console.log('Server has stopped, shutting down\n');
+    setTimeout(() => {
+        process.exit(0);
+    }, 1000);
 }).on('restart', function(files) {
     console.log('Server restarting. File: ', files);
 });

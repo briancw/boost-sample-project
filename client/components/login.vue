@@ -4,8 +4,6 @@
             <input type="text" v-model="email" />
             <input type="password" v-model="pwd" />
 
-            <a href="#!" @click.prevent="test_method">Test Method</a>
-
             <div v-if="error">
                 {{ error }}
             </div>
@@ -15,6 +13,11 @@
                 <!-- <RaisedButton type="submit" label="Login" primary={true} /> -->
             </div>
         </form>
+
+        <br />
+
+        <a v-on:click="test_auth()" href="#">Test</a>
+        <br /><br />
     </div>
 </template>
 
@@ -25,7 +28,7 @@
         name: 'home',
         data() {
             return {
-                email: 'brian@whicheloe.us',
+                email: 'brian@snapshot.is',
                 pwd: '123456',
                 error: '',
             };
@@ -33,25 +36,25 @@
         methods: {
             do_login(event) {
                 event.preventDefault();
-                boost.login('username', 'thepassword', function(err, response) {
-                    if (err) {
-                        console.log(err);
+                this.error = '';
+                let endpoint = '/api/login';
+                let payload = {email: this.email, pwd: this.pwd};
+                this.$http.post(endpoint, payload).then(response => {
+                    let answer = response.data;
+                    // console.log(answer);
+                    if (answer.success && answer.token) {
+                        localStorage.token = answer.token;
+                        console.log('logged in');
+                    } else if (answer.error) {
+                        this.error = answer.error;
                     }
-
+                });
+            },
+            test_auth() {
+                let endpoint = '/api/test';
+                this.$http.post(endpoint).then(response => {
                     console.log(response);
                 });
-                // this.error = '';
-                // let endpoint = '/api/login';
-                // let payload = {email: this.email, pwd: this.pwd};
-                // this.$http.post(endpoint, payload).then(response => {
-                //     let answer = response.data;
-                //     console.log(answer);
-                //     if (answer.success && answer.token) {
-                //         console.log('logged in');
-                //     } else if (answer.error) {
-                //         this.error = answer.error;
-                //     }
-                // });
             },
         },
     };

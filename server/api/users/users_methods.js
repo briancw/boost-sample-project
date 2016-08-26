@@ -7,7 +7,7 @@ const secret_key = process.env.JWT_SECRET;
 module.exports = function(api, check_auth) {
     api.post('/login', co(function * (req, res) {
         let return_val = {success: false};
-
+        console.log(req);
         if (!req.body.email) {
             return_val.error = 'Missing required email';
         } else if (!req.body.pwd) {
@@ -56,7 +56,7 @@ module.exports = function(api, check_auth) {
     }));
 
     api.post('/test', function(req, res) {
-        console.log(req.body.user_id);
+        console.log(req.user_id);
         res.send('yes');
     });
 };

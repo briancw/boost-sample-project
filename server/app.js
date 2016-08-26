@@ -8,7 +8,7 @@ const port = process.env.PORT ? process.env.PORT : 80;
 global.co = require('bluebird').coroutine;
 const app = boost.app;
 
-// require('./fixtures');
+require('./fixtures');
 require('./dev_mode.js')(app);
 // const check_auth = require('./auth_check.js');
 

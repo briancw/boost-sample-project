@@ -16,42 +16,42 @@ process.argv.forEach(arg => {
     }
 });
 
-setInterval(function() {
-    let rand = Math.round(Math.round() * 3);
-    if (rand === 0) {
-        Posts.save({
-            content: lorem(lorem_opts),
-            username: ((Math.random() > 0.555) ? 'adam' : 'brian'),
-        });
-    } else if (rand === 1) {
-        Posts.sample(1).run().then(posts => {
-            if (posts.length) {
-                posts[0].delete();
-            }
-        });
-    } else {
-        Posts.sample(5).run().then(posts => {
-            if (posts.length) {
-                posts.forEach(post => {
-                    post.merge({
-                        content: lorem(lorem_opts),
-                    }).save();
-                });
-            }
-        });
-    }
-
-    Posts.count().execute().then(count => {
-        if (count > 60) {
-            console.log('Deleting 20 posts');
-            Posts.sample(20).run().then(posts => {
-                posts.forEach(post => {
-                    post.delete();
-                });
-            });
-        }
-    });
-}, 500);
+// setInterval(function() {
+//     let rand = Math.round(Math.round() * 3);
+//     if (rand === 0) {
+//         Posts.save({
+//             content: lorem(lorem_opts),
+//             username: ((Math.random() > 0.555) ? 'adam' : 'brian'),
+//         });
+//     } else if (rand === 1) {
+//         Posts.sample(1).run().then(posts => {
+//             if (posts.length) {
+//                 posts[0].delete();
+//             }
+//         });
+//     } else {
+//         Posts.sample(5).run().then(posts => {
+//             if (posts.length) {
+//                 posts.forEach(post => {
+//                     post.merge({
+//                         content: lorem(lorem_opts),
+//                     }).save();
+//                 });
+//             }
+//         });
+//     }
+//
+//     Posts.count().execute().then(count => {
+//         if (count > 60) {
+//             console.log('Deleting 20 posts');
+//             Posts.sample(20).run().then(posts => {
+//                 posts.forEach(post => {
+//                     post.delete();
+//                 });
+//             });
+//         }
+//     });
+// }, 500);
 
 co(function * () {
     let user_count = yield Users.count().execute();
@@ -62,7 +62,7 @@ co(function * () {
         });
 
         Users.save({
-            email: 'brian@snapshot.is',
+            email: 'brian@whicheloe.us',
             pwd_hash: '123456',
         });
     }
