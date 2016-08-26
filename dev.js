@@ -8,11 +8,6 @@ const app = express();
 const port = 3005;
 const build_port = 3006;
 
-// compiler.plugin('compile', function() {
-// });
-// compiler.plugin('done', function() {
-// });
-
 // Webpack and serve built js from a dedicated task (to avoid resets)
 app.use(require("webpack-dev-middleware")(compiler, {
     // noInfo: true,
