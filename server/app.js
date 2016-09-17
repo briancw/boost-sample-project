@@ -1,6 +1,6 @@
 const BoostServer = require('boostjs-server');
-const boost_config = require('./boost_config');
-const boost = new BoostServer(boost_config);
+const boostConfig = require('./boost_config');
+const boost = new BoostServer(boostConfig);
 
 const express = require('express');
 const path = require('path');
@@ -17,7 +17,7 @@ app.use('/api', api);
 app.use('/', express.static(path.join(__dirname, '../public')));
 
 // Load Methods
-require('./api/users/users_methods.js')(api);
+require('./api/users/users_methods.js')(api, boost);
 require('./api/posts/posts_endpoint.js')(boost);
 
 boost.launch(port, err => {

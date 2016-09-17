@@ -1,12 +1,12 @@
 <template>
     <div id="site_container">
         <router-view class="view" transition transition-mode="out-in">
-            <template v-if="show_auth">
+            <!-- <template v-if="show_auth">
                 <login></login>
             </template>
-            <template v-if="!show_auth">
+            <template v-if="!show_auth"> -->
                 <component :is="page"></component>
-            </template>
+            <!-- </template> -->
         </router-view>
     </div>
 </template>
@@ -15,6 +15,7 @@
 import store from '../vuex/store.js';
 import Home from './home.vue';
 import Login from './login.vue';
+import TestAuth from './test_auth.vue';
 import FourOhFour from './four_oh_four.vue';
 
 export default {
@@ -22,13 +23,14 @@ export default {
     components: {
         Home,
         Login,
+        TestAuth,
         FourOhFour,
     },
     data() {
         return {
             template: this.$route.template,
             page: this.$route.page,
-            show_auth: false,
+            // show_auth: false,
         };
     },
     watch: {

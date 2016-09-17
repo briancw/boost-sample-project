@@ -9,5 +9,9 @@ module.exports = {
     cache: {
         type: 'redis',
         limit: 10,
-    }
+    },
+    jwt: {
+        // a week in ms
+        lifetime: 86400000,
+    },
 };

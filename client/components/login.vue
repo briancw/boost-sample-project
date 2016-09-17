@@ -14,15 +14,16 @@
             </div>
         </form>
 
-        <br />
 
-        <a v-on:click="test_auth()" href="#">Test</a>
+        <!-- <a v-on:click="test_auth()" href="#">Test</a> -->
+        <br />
         <br /><br />
+        <a v-on:click="logout" href="#">Logout</a>
     </div>
 </template>
 
 <script>
-    import boost from 'boostjs';
+    // import boost from 'boostjs';
 
     export default {
         name: 'home',
@@ -37,14 +38,35 @@
             do_login(event) {
                 event.preventDefault();
                 this.error = '';
+
                 let endpoint = '/api/login';
                 let payload = {email: this.email, pwd: this.pwd};
+
                 this.$http.post(endpoint, payload).then(response => {
                     let answer = response.data;
-                    // console.log(answer);
+
                     if (answer.success && answer.token) {
                         localStorage.token = answer.token;
+                        localStorage.invalidationDate = answer.invalidationDate;
                         console.log('logged in');
+                    } else if (answer.error) {
+                        this.error = answer.error;
+                    }
+                });
+            },
+            logout(event) {
+                event.preventDefault();
+                this.error = '';
+                let endpoint = '/api/logout';
+                let payload = {msg: 'please'};
+
+                this.$http.post(endpoint, payload).then(response => {
+                    let answer = response.data;
+                    if (answer.success && !answer.token) {
+
+                        delete localStorage.token;
+                        console.log('logged out');
+
                     } else if (answer.error) {
                         this.error = answer.error;
                     }

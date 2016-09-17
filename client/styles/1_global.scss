@@ -1,3 +1,9 @@
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
 .clearfix:after {
     content: ' ';
     clear: both;
@@ -15,4 +21,33 @@
     .site_content {
         flex: 1;
     }
+}
+
+#header {
+    background-color: #003b6f;
+    display: block;
+    width: 100%;
+    height: 100px;
+    padding: 30px;
+    color: #fff;
+
+    a {
+        color: #fff;
+
+        &:hover,
+        &:focus,
+        &:visited {
+            color: #aaa;
+        }
+    }
+}
+
+#footer {
+    background-color: #000;
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding-top: 20px;
+    color: #fff;
+    text-align: center;
 }
