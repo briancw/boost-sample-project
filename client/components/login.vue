@@ -17,21 +17,23 @@
 
         <!-- <a v-on:click="test_auth()" href="#">Test</a> -->
         <br />
+        <a v-on:click.prevent="test_auth" href="#">Test</a>
         <br /><br />
-        <a v-on:click="logout" href="#">Logout</a>
+        <a v-if="loggedIn" v-on:click.prevent="logout" href="#">Logout</a>
     </div>
 </template>
 
 <script>
-    // import boost from 'boostjs';
+    import boost from 'boostjs';
 
     export default {
         name: 'home',
         data() {
             return {
-                email: 'brian@snapshot.is',
+                email: 'brian@whicheloe.us',
                 pwd: '123456',
                 error: '',
+                loggedIn: false,
             };
         },
         methods: {
@@ -48,13 +50,15 @@
                     if (answer.success && answer.token) {
                         localStorage.token = answer.token;
                         localStorage.invalidationDate = answer.invalidationDate;
+                        this.$set('loggedIn', true);
                         console.log('logged in');
                     } else if (answer.error) {
                         this.error = answer.error;
                     }
                 });
             },
-            logout(event) {
+
+            http_logout(event) {
                 event.preventDefault();
                 this.error = '';
                 let endpoint = '/api/logout';
@@ -72,11 +76,18 @@
                     }
                 });
             },
+            
             test_auth() {
                 let endpoint = '/api/test';
                 this.$http.post(endpoint).then(response => {
                     console.log(response);
                 });
+            },
+
+            logout() {
+                boost.logout();
+                this.$set('loggedIn', false);
+                alert('You are now logged out');
             },
         },
     };

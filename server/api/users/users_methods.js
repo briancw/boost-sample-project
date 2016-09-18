@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken');
 const process = require('process');
 const secret_key = process.env.JWT_SECRET;
 
-module.exports = function(api, boost) {
+module.exports = function(boost, api) {
     api.post('/login', co(function * (req, res) {
+        console.log(req.authStatus);
+
         let return_val = {success: false};
         let email = req.body.email;
         let pwd = req.body.pwd;
@@ -89,5 +91,9 @@ module.exports = function(api, boost) {
 
     api.post('/test', function(req, res) {
         res.send({authStatus: req.authStatus});
+    });
+
+    api.post('/logout', function(req, res) {
+        boost.logoutToken(req.body.token);
     });
 };

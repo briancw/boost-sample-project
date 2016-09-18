@@ -17,7 +17,7 @@ app.use('/api', api);
 app.use('/', express.static(path.join(__dirname, '../public')));
 
 // Load Methods
-require('./api/users/users_methods.js')(api, boost);
+require('./api/users/users_methods.js')(boost, api);
 require('./api/posts/posts_endpoint.js')(boost);
 
 boost.launch(port, err => {
