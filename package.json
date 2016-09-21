@@ -11,11 +11,13 @@
     "production": "node server/app.js"
   },
   "dependencies": {
-    "bluebird": "^3.4.1",
+    "bluebird": "^3.4.6",
     "boostjs": "^0.0",
     "boostjs-server": "^0.0",
+    "chokidar": "^1.6.0",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.6",
+    "lodash": "^4.16.1",
     "lorem-hipsum": "^0.1.7",
     "rethinkdb": "^2.3.2",
     "socket.io": "^1.4.8",

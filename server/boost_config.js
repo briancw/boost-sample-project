@@ -7,6 +7,8 @@ module.exports = {
         plain: true,
     },
 
+    adapter: 'file',
+
     cache: {
         type: 'redis',
         limit: 10,

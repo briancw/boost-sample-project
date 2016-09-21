@@ -1,6 +1,8 @@
 <template>
     <div class="page_container home_page">
         <!-- Home {{ foo }}<br /> -->
+        <h1>{{ posts.data.stuff }}</h1>
+
         Comments:<br />
         <div v-for="post in posts.data" class="comment">
             User: {{ post.username }}<br />
@@ -12,7 +14,6 @@
 <script>
     import store from '../vuex/store.js';
     import boost from 'boostjs';
-    console.log(boost.login)
 
     export default {
         name: 'home',
@@ -24,9 +25,14 @@
         // },
         data() {
             return {
-                posts: boost.subscribe('/posts'),
+                posts: boost.subscribe('/test'),
             };
         },
+
+        ready() {
+            console.log(this.posts);
+        },
+
         created() {
         },
     };
