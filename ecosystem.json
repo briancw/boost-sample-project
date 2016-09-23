@@ -1,0 +1,15 @@
+{
+    "apps": [{
+        "name":   "Boost Server",
+        "script": "server/app.js",
+        "watch": ["server/"],
+        "ignore_watch": ["client/", "public/"],
+        "args": "dev",
+        "node_args": "--inspect",
+        "env": {
+          "PORT": "3005",
+          "BUILD_PORT": "3006",
+          "JWT_SECRET": "test"
+        },
+    }]
+}

@@ -7,6 +7,8 @@
   "license": "ISC",
   "scripts": {
     "dev": "node dev.js",
+    "hmr": "node hmr.js",
+    "server": "pm2 start ecosystem.json && . ./bin/devtool.sh && pm2 logs",
     "build-client": "webpack --config=webpack.production.conf.js",
     "production": "node server/app.js"
   },
