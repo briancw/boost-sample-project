@@ -5,3 +5,5 @@ dist
 keys.*
 .DS_Store
 .sessions/*.s
+*_dump.txt
+dump.rdb

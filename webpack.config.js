@@ -35,4 +35,9 @@ module.exports = {
             sass: 'style!css!sass?indentedSyntax',
         },
     },
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.js',
+        },
+    },
 };

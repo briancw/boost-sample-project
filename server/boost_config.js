@@ -6,14 +6,11 @@ module.exports = {
         protocols: ['http/1.1'],
         plain: true,
     },
-
-    adapter: 'file',
-
+    adapter: 'rethink',
     cache: {
         type: 'redis',
         limit: 10,
     },
-    
     jwt: {
         // a week in ms
         lifetime: 86400000,

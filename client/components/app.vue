@@ -1,47 +1,25 @@
 <template>
-    <div id="site_container">
-        <router-view class="view" transition transition-mode="out-in">
-            <!-- <template v-if="show_auth">
-                <login></login>
-            </template>
-            <template v-if="!show_auth"> -->
-                <component :is="page"></component>
-            <!-- </template> -->
-        </router-view>
+    <div id="app">
+        <div id="site_container">
+            <router-link to="/home">Testin</router-link>
+            <router-link to="/login">login</router-link>
+            <router-link to="/something">Something</router-link>
+            <transition name="fade" mode="out-in">
+                <router-view class="view"></router-view>
+            </transition>
+        </div>
     </div>
 </template>
 
 <script>
-import store from '../vuex/store.js';
-import Home from './home.vue';
-import Login from './login.vue';
-import TestAuth from './test_auth.vue';
-import FourOhFour from './four_oh_four.vue';
+
+// import store from '../vuex/store.js';
 
 export default {
-    store: store,
-    components: {
-        Home,
-        Login,
-        TestAuth,
-        FourOhFour,
-    },
     data() {
         return {
-            template: this.$route.template,
-            page: this.$route.page,
             // show_auth: false,
         };
-    },
-    watch: {
-        $route: function() {
-            this.template = (this.$route.template) ? this.$route.template : 'default';
-            this.page = (this.$route.page) ? this.$route.page : 'home';
-        },
-    },
-    created() {
-    },
-    methods: {
     },
 };
 </script>

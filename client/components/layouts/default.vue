@@ -1,7 +1,7 @@
 <template>
     <div id="auth_container">
         <default-header></default-header>
-        <slot></slot>
+        <router-view></router-view>
         <default-footer></default-footer>
     </div>
 </template>
@@ -15,5 +15,12 @@
             DefaultHeader,
             DefaultFooter,
         },
+        // watch: {
+        //     $route: function() {
+        //     //     this.template = (this.$route.template) ? this.$route.template : 'default';
+        //         this.page = (this.$route.page) ? this.$route.page : 'home';
+        //         console.log(this.page);
+        //     },
+        // },
     };
 </script>

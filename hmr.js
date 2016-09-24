@@ -1,25 +1,20 @@
-const nodemon = require('nodemon');
 const path = require('path');
-
 const webpack = require('webpack');
 const webpack_config = require('./webpack.dev.conf.js');
 const compiler = webpack(webpack_config);
-
 const express = require('express');
 const app = express();
-
-const port = 3005;
 const build_port = 3006;
 
 // Webpack and serve built js from a dedicated task (to avoid resets)
-app.use(require("webpack-dev-middleware")(compiler, {
+app.use(require('webpack-dev-middleware')(compiler, {
     // noInfo: true,
     // stats: {colors: true},
-    quiet: true,
+    quiet: false,
     publicPath: webpack_config.output.publicPath,
 }));
 
-app.use(require("webpack-hot-middleware")(compiler, {
+app.use(require('webpack-hot-middleware')(compiler, {
     log: console.log,
     path: '/__webpack_hmr',
     heartbeat: 10 * 1000,

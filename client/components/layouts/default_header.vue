@@ -2,7 +2,8 @@
     <header id="header">
         Header
         <div class="menu">
-            <a v-link="{path: '/login'}" class="account_link">Login</a>
+            <router-link to="/home">Home</router-link>
+            <router-link to="/login">Login</router-link>
         </div>
     </header>
 </template>

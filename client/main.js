@@ -1,26 +1,28 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Resource from 'vue-resource';
-import mixins from './mixins.js';
-import interceptors from './interceptors.js';
-import routes from './routes.js';
+import boost from 'boostjs';
+// import interceptors from './interceptors.js';
+// import mixins from './mixins.js';
+// import routes from './routes.js';
+// import Resource from 'vue-resource';
+// Vue.use(Resource);
+// Vue.mixin(mixins);
+// Vue.use(interceptors);
+
 import App from './components/app.vue';
+import Default from './components/layouts/default.vue';
+import Auth from './components/layouts/auth.vue';
 
-Vue.use(Router);
-Vue.use(Resource);
-Vue.mixin(mixins);
-Vue.use(interceptors);
+import Home from './components/home.vue';
+import Login from './components/login.vue';
 
-const router = new Router({history: true});
-router.map(routes);
-
-router.beforeEach(function(transition) {
-    window.scrollTo(0, 0);
-    if (!transition.to.matched) {
-        transition.redirect('/404');
-    }
-
-    transition.next();
-});
-
-router.start(App, '#app');
+let routes = [
+    {path: '/', component: App, children: [
+        {path: '', component: Default, children: [
+            {path: '/home', component: Home},
+            {path: '/login', component: Login},
+        ]},
+        {path: '', component: Auth, children: [
+            {path: '/something', component: Home},
+        ]},
+    ]},
+];
+boost.start(routes, App);
